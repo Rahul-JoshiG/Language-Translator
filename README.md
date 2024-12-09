@@ -70,7 +70,7 @@
 
 <h2>📥 Download</h2>
 <p>
-    The app is available for download in the <a href="https://github.com/your-username/language-translator-app/releases">Release Section</a>.
+    The app is available for download in the <a href="https://github.com/Rahul-JoshiG/Language-Translator/releases/tag/v1.4">Release Section</a>.
 </p>
 
 <h2>📧 Contact</h2>
