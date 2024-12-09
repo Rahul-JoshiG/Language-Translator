@@ -140,21 +140,21 @@
                 android:id="@+id/speak_original_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:padding="10dp"
                 android:contentDescription="@string/play_and_pause_speech"
                 android:src="@drawable/ic_play_24"
                 app:layout_constraintEnd_toEndOf="@id/speech_text"
-                app:layout_constraintTop_toTopOf="@id/speech_text" />
+                app:layout_constraintBottom_toBottomOf="@id/speech_text" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/speak_translated_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:contentDescription="@string/play_and_pause_speech"
+                android:padding="10dp"
+                android:contentDescription="@string/play_and_pause_speech_for_translated"
                 android:src="@drawable/ic_play_24"
                 app:layout_constraintEnd_toEndOf="@id/speech_translate_text"
-                app:layout_constraintTop_toTopOf="@id/speech_translate_text" />
+                app:layout_constraintBottom_toBottomOf="@id/speech_translate_text" />
 
 
             <ProgressBar

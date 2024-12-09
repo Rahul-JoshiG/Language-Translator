@@ -91,13 +91,11 @@
                 android:id="@+id/speak_original_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top|end"
                 android:contentDescription="@string/play_and_pause_text"
-                android:layout_margin="5dp"
-                android:layout_marginTop="87dp"
                 android:src="@drawable/ic_play_24"
+                android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="@+id/source_text"
-                app:layout_constraintTop_toTopOf="@+id/source_text" />
+                app:layout_constraintBottom_toBottomOf="@+id/source_text" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/translate_button"
@@ -137,13 +135,11 @@
                 android:id="@+id/speak_translated_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top|end"
-                android:layout_margin="5dp"
-                android:layout_marginTop="87dp"
-                android:contentDescription="@string/play_and_pause_text"
+                android:padding="10dp"
+                android:contentDescription="@string/play_and_pause_text_for_translated"
                 android:src="@drawable/ic_play_24"
                 app:layout_constraintEnd_toEndOf="@+id/target_text"
-                app:layout_constraintTop_toTopOf="@+id/target_text" />
+               app:layout_constraintBottom_toBottomOf="@+id/target_text" />
 
             <ProgressBar
                 android:id="@+id/progress_bar"
