@@ -21,7 +21,10 @@
     <string name="text">Text</string>
     <string name="home">Home</string>
     <string name="play_and_pause_image">play and pause in image text</string>
+    <string name="play_and_pause_image_for_translated">play and pause in image translated text</string>
     <string name="play_and_pause_text">play and pause in text</string>
+    <string name="play_and_pause_text_for_translated">play and pause in translated text</string>
     <string name="play_and_pause_speech">play and pause in speech</string>
+    <string name="play_and_pause_speech_for_translated">play and pause in translated speech</string>
     <string name="mic_image_for_speak_the_text">mic image for speak the text</string>
 </resources>
