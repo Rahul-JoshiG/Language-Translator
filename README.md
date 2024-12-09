@@ -1,20 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Language Translator App</title>
-</head>
-<body>
+<div style="text-align: center;">
+    <img src="https://github.com/Rahul-JoshiG/Language-Translator/blob/master/app/src/main/res/drawable/logo.png" alt="App Image"/>
+</div>
 
-<h1 align="center">Language Translator App</h1>
+<h1 style="text-align: center;">Language Translator App</h1>
 
-<p align="center">
+<p style="text-align: center;">
     A powerful and user-friendly app for translating text, image text, and speech into any desired language.
 </p>
 
 <h2>🚀 Features</h2>
-<ul>
+<ul style="text-align: justify;">
     <li><strong>Text Translation:</strong> Translate manually entered text into any supported language.</li>
     <li><strong>Image Translation:</strong> Extract text from images and translate it instantly using Firebase ML Kit.</li>
     <li><strong>Speech Translation:</strong> Real-time translation of spoken words.</li>
@@ -25,7 +20,7 @@
 </ul>
 
 <h2>📋 Prerequisites</h2>
-<ul>
+<ul style="text-align: justify;">
     <li>An Android device running Android 8.0 (Oreo) or higher.</li>
     <li>An active internet connection for real-time translations.</li>
     <li>Firebase account setup to use ML Kit services.</li>
@@ -33,7 +28,7 @@
 </ul>
 
 <h2>🛠️ Tech Stack</h2>
-<ul>
+<ul style="text-align: justify;">
     <li><strong>Programming Language:</strong> Kotlin</li>
     <li><strong>Architecture:</strong> MVVM</li>
     <li><strong>Technologies:</strong> Firebase ML Kit, Google Gemini API</li>
@@ -41,14 +36,14 @@
 </ul>
 
 <h2>📄 Project Overview</h2>
-<p>
+<p style="text-align: justify;">
     The Language Translator App empowers users to communicate and understand languages across the globe by providing a reliable platform for text, image, and speech translation. 
     The app's development started on <strong>October 13, 2024</strong>, with final approval by <strong>Mr. Deepak Dangwal</strong>, Assistant Professor. 
     The project was completed on <strong>December 5, 2024</strong>.
 </p>
 
 <h2>📦 Installation</h2>
-<ol>
+<ol style="text-align: justify;">
     <li>Clone the repository:
         <pre><code>git clone https://github.com/your-username/language-translator-app.git</code></pre>
     </li>
@@ -58,7 +53,7 @@
 </ol>
 
 <h2>📚 How to Use</h2>
-<ol>
+<ol style="text-align: justify;">
     <li>Launch the app.</li>
     <li>Select the source and target languages using the dropdown menu.</li>
     <li>Use the bottom navigation bar to choose the translation method:
@@ -78,7 +73,7 @@
 </p>
 
 <h2>📧 Contact</h2>
-<p>
+<p style="text-align: justify;">
     For any inquiries or feedback, please contact:
     <ul>
         <li><strong>Developer:</strong> Rahul Joshi</li>
@@ -86,7 +81,7 @@
     </ul>
 
 <h2>🎉 Acknowledgments</h2>
-<ul>
+<ul style="text-align: justify;">
     <li>Thanks to Firebase for providing robust ML Kit services.</li>
     <li>Special appreciation to Google for their Gemini API.</li>
 </ul>
@@ -94,6 +89,3 @@
 [//]: # (<h2>📝 License</h2>)
 
 [//]: # (<p>This project is licensed under the MIT License - see the <code>LICENSE</code> file for details.</p>)
-
-</body>
-</html>
