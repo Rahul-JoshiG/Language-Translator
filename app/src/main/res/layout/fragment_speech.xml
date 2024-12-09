@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.languagetranslator.languagetranslator.viewmodel.MyViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:background="@color/colorPrimary"
+            tools:context=".view.fragments.SpeechFragment">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/speech_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:gravity="center_horizontal"
+                app:layout_constraintTop_toTopOf="parent"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="Speech Translator"
+                app:titleTextColor="@color/white" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/add_speech_card"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="24dp"
+                android:elevation="8dp"
+                android:labelFor="@id/add_speech_view"
+                app:cardBackgroundColor="#2F2F2F"
+                app:cardCornerRadius="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/speech_toolbar">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/add_speech_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="20dp"
+                    android:contentDescription="@string/mic_image_for_speak_the_text"
+                    android:src="@drawable/ic_speech_24"
+                    android:tint="@android:color/white" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="10dp"
+                android:text="@string/click_the_microphone_button_and_say_something"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@id/add_speech_card"
+                app:layout_constraintStart_toStartOf="@id/add_speech_card"
+                app:layout_constraintTop_toBottomOf="@id/add_speech_card" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@id/info">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinner_target_language"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_background"
+                    android:focusable="true"
+                    android:minHeight="48dp"
+                    android:paddingHorizontal="16dp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/translate_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/button_background"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="12dp"
+                android:text="@string/translate"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linear_layout" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/speech_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/input_background"
+                android:hint="@string/say_something"
+                android:lines="3"
+                android:padding="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/translate_button" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/speech_translate_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/input_background"
+                android:hint="@string/translation"
+                android:lines="3"
+                android:padding="20dp"
+                android:text="@{viewModel.translationResult.toString()}"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/speech_text" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/speak_original_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:contentDescription="@string/play_and_pause_speech"
+                android:src="@drawable/ic_play_24"
+                app:layout_constraintEnd_toEndOf="@id/speech_text"
+                app:layout_constraintTop_toTopOf="@id/speech_text" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/speak_translated_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:contentDescription="@string/play_and_pause_speech"
+                android:src="@drawable/ic_play_24"
+                app:layout_constraintEnd_toEndOf="@id/speech_translate_text"
+                app:layout_constraintTop_toTopOf="@id/speech_translate_text" />
+
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/white"
+                android:padding="10dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/speech_translate_text"
+                app:layout_constraintEnd_toEndOf="@id/speech_translate_text"
+                app:layout_constraintStart_toStartOf="@id/speech_translate_text"
+                app:layout_constraintTop_toTopOf="@id/speech_translate_text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.languagetranslator.languagetranslator.viewmodel.MyViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="@color/black">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            tools:context=".view.fragments.TextFragment">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/text_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorAccent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:gravity="center_horizontal"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+                app:title="Text Translator"
+                app:titleTextColor="@android:color/white" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/text_toolbar">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/source_lang"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_background"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/target_lang"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_background"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textAlignment="center" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/source_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="150dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/input_background"
+                android:cursorVisible="true"
+                android:gravity="top|start"
+                android:hint="@string/type_something"
+                android:padding="12dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@color/white"
+                android:textCursorDrawable="@drawable/cursor_white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linear_layout" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/speak_original_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:contentDescription="@string/play_and_pause_text"
+                android:layout_margin="5dp"
+                android:layout_marginTop="87dp"
+                android:src="@drawable/ic_play_24"
+                app:layout_constraintEnd_toEndOf="@+id/source_text"
+                app:layout_constraintTop_toTopOf="@+id/source_text" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/translate_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/button_background"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="12dp"
+                android:text="@string/translate"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/source_text" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/target_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="150dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/input_background"
+                android:gravity="top|start"
+                android:hint="@string/translation"
+                android:text="@{viewModel.translationResult.toString()}"
+                android:padding="12dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/translate_button" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/speak_translated_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_margin="5dp"
+                android:layout_marginTop="87dp"
+                android:contentDescription="@string/play_and_pause_text"
+                android:src="@drawable/ic_play_24"
+                app:layout_constraintEnd_toEndOf="@+id/target_text"
+                app:layout_constraintTop_toTopOf="@+id/target_text" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/white"
+                android:padding="12dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/target_text"
+                app:layout_constraintEnd_toEndOf="@id/target_text"
+                app:layout_constraintStart_toStartOf="@id/target_text"
+                app:layout_constraintTop_toTopOf="@id/target_text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

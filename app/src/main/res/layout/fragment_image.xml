@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.languagetranslator.languagetranslator.viewmodel.MyViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="@color/black">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:textAlignment="center"
+            android:scrollbars="vertical"
+            tools:context=".view.fragments.ImageFragment">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/image_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorAccent"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+                app:title="Image Translator"
+                app:titleTextColor="@android:color/white" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/add_image_card"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="24dp"
+                android:elevation="8dp"
+                app:cardBackgroundColor="#2F2F2F"
+                app:cardCornerRadius="100dp"
+                app:layout_constraintBottom_toBottomOf="@id/image_card_view"
+                app:layout_constraintEnd_toEndOf="@id/image_card_view"
+                app:layout_constraintStart_toStartOf="@id/image_card_view"
+                app:layout_constraintTop_toTopOf="@id/image_card_view">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/add_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/add_translate_image"
+                    android:padding="50dp"
+                    android:src="@drawable/ic_add_image_24"
+                    android:tint="@android:color/white" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/image_card_view"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:elevation="8dp"
+                android:visibility="invisible"
+                app:cardCornerRadius="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_toolbar">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/translate_image" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="10dp"
+                android:text="@string/click_the_image_button_to_capture_the_image"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@id/add_image_card"
+                app:layout_constraintStart_toStartOf="@id/add_image_card"
+                app:layout_constraintTop_toBottomOf="@id/add_image_card" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/translate_image_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/button_background"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="12dp"
+                android:text="@string/translate_image"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/target_language" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/target_language"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/spinner_background"
+                android:minHeight="48dp"
+                android:paddingHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/info" />
+
+            <LinearLayout
+                android:id="@+id/result_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/translate_image_btn">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#2A2929"
+                    app:cardCornerRadius="16dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/image_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#2A2929"
+                        android:gravity="top|start"
+                        android:hint="@string/image_text"
+                        android:minLines="3"
+                        android:padding="16dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textIsSelectable="true"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/speak_original_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_margin="5dp"
+                        android:contentDescription="@string/play_and_pause_image"
+                        android:src="@drawable/ic_play_24" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_org"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/white"
+                        android:visibility="invisible" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#1E1E1E"
+                    app:cardCornerRadius="16dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/translated_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#2A2929"
+                        android:gravity="top|start"
+                        android:hint="@string/translation"
+                        android:text="@{viewModel.translationResult.toString()}"
+                        android:minLines="3"
+                        android:padding="16dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textIsSelectable="true"
+                        android:textSize="16sp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_trs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/white"
+                        android:visibility="invisible" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/speak_translated_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_margin="5dp"
+                        android:contentDescription="@string/play_and_pause_image"
+                        android:src="@drawable/ic_play_24" />
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

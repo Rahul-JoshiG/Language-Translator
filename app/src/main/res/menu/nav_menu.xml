@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/text"
+        android:contentDescription="@string/text_convertor"
+        android:icon="@drawable/ic_text_24"
+        android:title="@string/text" />
+    <item
+        android:id="@+id/image"
+        android:contentDescription="@string/image_text"
+        android:icon="@drawable/ic_image_24"
+        android:title="@string/image" />
+    <item
+        android:id="@+id/speech"
+        android:contentDescription="@string/speech_convertor"
+        android:icon="@drawable/ic_speech_24"
+        android:title="@string/speech" />
+</menu>

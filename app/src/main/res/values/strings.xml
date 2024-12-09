@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Language Translator</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_convertor">Text Convertor</string>
+    <string name="type_something">Type Something…</string>
+    <string name="result">Result</string>
+    <string name="image_extract">Image Extract</string>
+    <string name="speech_convertor">Speech Convertor</string>
+    <string name="translate_image">Translate Image</string>
+    <string name="add_translate_image">Add Translate Image</string>
+    <string name="result_is_here">Result is here…</string>
+    <string name="image_text">Image Text</string>
+    <string name="say_something">Say Something</string>
+    <string name="translation">Translation</string>
+    <string name="click_the_microphone_button_and_say_something">Click the microphone button, and say something</string>
+    <string name="click_the_image_button_to_capture_the_image">Click the image button to capture the image</string>
+    <string name="translate">Translate</string>
+    <string name="speech">Speech</string>
+    <string name="image">Image</string>
+    <string name="text">Text</string>
+    <string name="home">Home</string>
+    <string name="play_and_pause_image">play and pause in image text</string>
+    <string name="play_and_pause_text">play and pause in text</string>
+    <string name="play_and_pause_speech">play and pause in speech</string>
+    <string name="mic_image_for_speak_the_text">mic image for speak the text</string>
+</resources>

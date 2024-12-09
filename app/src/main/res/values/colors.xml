@@ -1,0 +1,11 @@
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimaryLight">#2F2F2F</color>
+    <color name="colorAccent">#444444</color>
+
+
+</resources>
