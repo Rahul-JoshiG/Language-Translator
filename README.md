@@ -68,10 +68,13 @@
     <li>Use the "Speak" button to hear the original and translated text.</li>
 </ol>
 
-<h2>📥 Download</h2>
+<h2>📥 Download in Mobile Phones</h2>
 <p>
     The app is available for download in the <a href="https://github.com/Rahul-JoshiG/Language-Translator/releases/tag/v1.4">Release Section</a>.
 </p>
+
+<br>
+<h2>Screenshots of App</h2>
 
 <h2>📧 Contact</h2>
 <p style="text-align: justify;">
