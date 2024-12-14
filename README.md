@@ -1,6 +1,7 @@
-<div style="text-align: center;">
+<div style="text-align: center;height:100; width:100">
     <img src="https://github.com/Rahul-JoshiG/Language-Translator/blob/master/app/src/main/res/drawable/logo.png" alt="App Image"/>
 </div>
+<br>
 
 <h1 style="text-align: center;">Language Translator App</h1>
 
@@ -69,7 +70,7 @@
 
 <h2>📥 Download</h2>
 <p>
-    The app is available for download in the <a href="https://github.com/your-username/language-translator-app/releases">Release Section</a>.
+    The app is available for download in the <a href="https://github.com/Rahul-JoshiG/Language-Translator/releases/tag/v1.4">Release Section</a>.
 </p>
 
 <h2>📧 Contact</h2>
