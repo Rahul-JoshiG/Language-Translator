@@ -76,6 +76,27 @@
 <br>
 <h2>Screenshots of App</h2>
 
+<caption>Text Translation UI</caption>                                                                                    <caption>Image Translation UI</caption>
+![text](https://github.com/user-attachments/assets/d1dfba03-ae05-4ea8-8821-c3e8fc5a0e69)                                  ![image](https://github.com/user-attachments/assets/f64512d6-335a-4d1c-aed5-11cfc9120920)
+
+
+
+<caption>Speech Translation UI</caption>
+![speech](https://github.com/user-attachments/assets/a16197f4-0f86-4379-90a9-c9146a44c7d0)                              
+
+
+
+<caption>Text Translation Working</caption>                                                                     <caption>Image Translation Workding</caption>
+![translate_text](https://github.com/user-attachments/assets/89a37f59-f657-48a5-8615-83f86e07e710)              ![translate_image](https://github.com/user-attachments/assets/a2a0613c-ba3a-4508-a7ea-ea732553058e)
+
+
+
+<caption>Speech Translation Working</caption>
+![speech](https://github.com/user-attachments/assets/e7e51cbc-f54b-4749-b122-880bbfc90b69)
+
+
+
+
 <h2>📧 Contact</h2>
 <p style="text-align: justify;">
     For any inquiries or feedback, please contact:
