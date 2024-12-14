@@ -76,25 +76,39 @@
 
 <h2>Screenshots of App</h2>
 
+<div style="height:300px; width:300px">
+![text](https://github.com/user-attachments/assets/d1dfba03-ae05-4ea8-8821-c3e8fc5a0e69)                                  
+<caption>Text Translation UI</caption>
+</div>
 
-![text](https://github.com/user-attachments/assets/d1dfba03-ae05-4ea8-8821-c3e8fc5a0e69)                                  ![image](https://github.com/user-attachments/assets/f64512d6-335a-4d1c-aed5-11cfc9120920)
-<caption>Text Translation UI</caption>                                                                                    <caption>Image Translation UI</caption>
+
+<div style="height:300px; width:300px">
+![image](https://github.com/user-attachments/assets/f64512d6-335a-4d1c-aed5-11cfc9120920)
+<caption>Image Translation UI</caption>
+</div>
 
 
-
+<div style="height:300px; width:300px">
 ![speech](https://github.com/user-attachments/assets/a16197f4-0f86-4379-90a9-c9146a44c7d0)                              
 <caption>Speech Translation UI</caption>
+</div>
 
 
+<div style="height:300px; width:300px">
+![translate_text](https://github.com/user-attachments/assets/89a37f59-f657-48a5-8615-83f86e07e710)              
+<caption>Text Translation Working</caption>
+</div>
 
-![translate_text](https://github.com/user-attachments/assets/89a37f59-f657-48a5-8615-83f86e07e710)              ![translate_image](https://github.com/user-attachments/assets/a2a0613c-ba3a-4508-a7ea-ea732553058e)
-<caption>Text Translation Working</caption>                                                                     <caption>Image Translation Workding</caption>
+<div style="height:300px; width:300px">
+![translate_image](https://github.com/user-attachments/assets/a2a0613c-ba3a-4508-a7ea-ea732553058e)
+<caption>Image Translation Workding</caption>
+</div>
 
 
-
+<div style="height:300px; width:300px">
 ![speech](https://github.com/user-attachments/assets/e7e51cbc-f54b-4749-b122-880bbfc90b69)
 <caption>Speech Translation Working</caption>
-
+</div>
 
 
 <h2>📧 Contact</h2>
