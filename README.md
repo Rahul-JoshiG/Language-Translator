@@ -1,5 +1,5 @@
-<div style="text-align: center;height:100; width:100">
-    <img src="https://github.com/Rahul-JoshiG/Language-Translator/blob/master/app/src/main/res/drawable/logo.png" alt="App Image" style="height:100px;width:100px;"/>
+<div>
+    <img src="https://github.com/Rahul-JoshiG/Language-Translator/blob/master/app/src/main/res/drawable/logo.png" alt="App Image" align="center" style="height:200px;width:200px;"/>
 </div>
 <br>
 
