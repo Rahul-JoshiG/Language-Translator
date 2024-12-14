@@ -21,6 +21,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -53,17 +54,8 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
     private val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
     private lateinit var imgBitmap: Bitmap
 
-    private val cameraLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val imageBitmap = result.data?.extras?.get("data") as Bitmap
-            imgBitmap = imageBitmap
-            mBinding.imageCardView.visibility = VISIBLE
-            mBinding.info.visibility = INVISIBLE
-            mBinding.imageView.load(imageBitmap)
-        }
-    }
+    private lateinit var cameraLauncher : ActivityResultLauncher<Intent>
+
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -74,7 +66,6 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
             Log.d(TAG, "Permission denied")
         }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,9 +81,26 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "onViewCreated: view created for fragment image")
         mSpeech = TextToSpeech(requireContext(), this)
+
+        initCameraLauncher()
         setUpToolbar()
         setUpSpinner()
         seOnClickListener()
+    }
+
+    private fun initCameraLauncher() {
+        Log.d(TAG, "initCameraLauncher: initial launcher ")
+        cameraLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val imageBitmap = result.data?.extras?.get("data") as Bitmap
+                imgBitmap = imageBitmap
+                mBinding.imageCardView.visibility = VISIBLE
+                mBinding.info.visibility = INVISIBLE
+                mBinding.imageView.load(imageBitmap)
+            }
+        }
     }
 
 
