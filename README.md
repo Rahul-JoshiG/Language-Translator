@@ -76,39 +76,39 @@
 
 <h2>Screenshots of App</h2>
 
-<div style="height:300px; width:300px">
+<div style="height:200px; width:200px; margin-bottom:20px;">
   <img src="https://github.com/user-attachments/assets/d1dfba03-ae05-4ea8-8821-c3e8fc5a0e69" 
-       alt="Text Translation UI" style="height:100%; width:100%;">
+       alt="Text Translation UI" style="height:100%; width:100%; object-fit:contain;">
   <caption>Text Translation UI</caption>
 </div>
 
-<div style="height:300px; width:300px">
+<div style="height:200px; width:200px; margin-bottom:20px;">
   <img src="https://github.com/user-attachments/assets/f64512d6-335a-4d1c-aed5-11cfc9120920" 
-       alt="Image Translation UI" style="height:100%; width:100%;">
+       alt="Image Translation UI" style="height:100%; width:100%; object-fit:contain;">
   <caption>Image Translation UI</caption>
 </div>
 
-<div style="height:300px; width:300px">
+<div style="height:200px; width:200px; margin-bottom:20px;">
   <img src="https://github.com/user-attachments/assets/a16197f4-0f86-4379-90a9-c9146a44c7d0" 
-       alt="Speech Translation UI" style="height:100%; width:100%;">
+       alt="Speech Translation UI" style="height:100%; width:100%; object-fit:contain;">
   <caption>Speech Translation UI</caption>
 </div>
 
-<div style="height:300px; width:300px">
+<div style="height:200px; width:200px; margin-bottom:20px;">
   <img src="https://github.com/user-attachments/assets/89a37f59-f657-48a5-8615-83f86e07e710" 
-       alt="Text Translation Working" style="height:100%; width:100%;">
+       alt="Text Translation Working" style="height:100%; width:100%; object-fit:contain;">
   <caption>Text Translation Working</caption>
 </div>
 
-<div style="height:300px; width:300px">
+<div style="height:200px; width:200px; margin-bottom:20px;">
   <img src="https://github.com/user-attachments/assets/a2a0613c-ba3a-4508-a7ea-ea732553058e" 
-       alt="Image Translation Working" style="height:100%; width:100%;">
+       alt="Image Translation Working" style="height:100%; width:100%; object-fit:contain;">
   <caption>Image Translation Working</caption>
 </div>
 
-<div style="height:300px; width:300px">
+<div style="height:200px; width:200px; margin-bottom:20px;">
   <img src="https://github.com/user-attachments/assets/e7e51cbc-f54b-4749-b122-880bbfc90b69" 
-       alt="Speech Translation Working" style="height:100%; width:100%;">
+       alt="Speech Translation Working" style="height:100%; width:100%; object-fit:contain;">
   <caption>Speech Translation Working</caption>
 </div>
 
