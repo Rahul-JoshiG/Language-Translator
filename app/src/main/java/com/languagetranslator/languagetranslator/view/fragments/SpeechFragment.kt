@@ -24,10 +24,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.languagetranslator.languagetranslator.R
 import com.languagetranslator.languagetranslator.databinding.FragmentSpeechBinding
 import com.languagetranslator.languagetranslator.datamodel.supportedLanguages
-import com.languagetranslator.languagetranslator.utils.Keys
+import com.languagetranslator.languagetranslator.utils.Constant
 import com.languagetranslator.languagetranslator.viewmodel.MyViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
+@AndroidEntryPoint
 class SpeechFragment : Fragment(), TextToSpeech.OnInitListener {
 
     private var _binding: FragmentSpeechBinding? = null
@@ -107,13 +109,13 @@ class SpeechFragment : Fragment(), TextToSpeech.OnInitListener {
 
         mBinding.speakOriginalText.setOnClickListener {
             val data = mBinding.speechText.text.toString()
-            monitorPlayState(Keys.ORIGINAL_TEXT)
+            monitorPlayState(Constant.ORIGINAL_TEXT)
             speakOriginalText(originalText = data)
         }
 
         mBinding.speakTranslatedText.setOnClickListener {
             val data = mBinding.speechTranslateText.text.toString()
-            monitorPlayState(Keys.TRANSLATED_TEXT)
+            monitorPlayState(Constant.TRANSLATED_TEXT)
             speakTheTranslatedText(data)
         }
     }
@@ -127,7 +129,7 @@ class SpeechFragment : Fragment(), TextToSpeech.OnInitListener {
 
         if (isOriginalSpeaking) {
             if (mSpeech.isSpeaking) mSpeech.stop()
-            resetToPlayState(Keys.ORIGINAL_TEXT)
+            resetToPlayState(Constant.ORIGINAL_TEXT)
         } else {
             mBinding.speakOriginalText.setImageDrawable(
                 getDrawable(
@@ -162,7 +164,7 @@ class SpeechFragment : Fragment(), TextToSpeech.OnInitListener {
 
         if (isTranslatedSpeaking) {
             if (mSpeech.isSpeaking) mSpeech.stop()
-            resetToPlayState(Keys.TRANSLATED_TEXT)
+            resetToPlayState(Constant.TRANSLATED_TEXT)
         } else {
             mBinding.speakTranslatedText.setImageDrawable(
                 getDrawable(requireContext(), R.drawable.ic_pause_24)
@@ -187,11 +189,11 @@ class SpeechFragment : Fragment(), TextToSpeech.OnInitListener {
 
     private fun resetToPlayState(resource: String) {
         when (resource) {
-            Keys.ORIGINAL_TEXT -> mBinding.speakOriginalText.setImageDrawable(
+            Constant.ORIGINAL_TEXT -> mBinding.speakOriginalText.setImageDrawable(
                 getDrawable(requireContext(), R.drawable.ic_play_24)
             )
 
-            Keys.TRANSLATED_TEXT -> mBinding.speakTranslatedText.setImageDrawable(
+            Constant.TRANSLATED_TEXT -> mBinding.speakTranslatedText.setImageDrawable(
                 getDrawable(requireContext(), R.drawable.ic_play_24)
             )
         }

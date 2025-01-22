@@ -17,8 +17,11 @@ import com.languagetranslator.languagetranslator.utils.NetworkUtils
 import com.languagetranslator.languagetranslator.view.fragments.ImageFragment
 import com.languagetranslator.languagetranslator.view.fragments.SpeechFragment
 import com.languagetranslator.languagetranslator.view.fragments.TextFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+
     private lateinit var mBinding: ActivityMainBinding
     private val mTextFragment by lazy { TextFragment() }
     private val mImageFragment by lazy { ImageFragment() }

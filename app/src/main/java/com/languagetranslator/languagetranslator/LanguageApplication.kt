@@ -1,9 +1,12 @@
-package com.languagetranslator.languagetranslator.utils
+package com.languagetranslator.languagetranslator
 
 import android.app.Application
 import android.util.Log
+import com.languagetranslator.languagetranslator.utils.NetworkUtils
+import dagger.hilt.android.HiltAndroidApp
 
-class MyApplication: Application() {
+@HiltAndroidApp
+class LanguageApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Log.d(TAG, "onCreate: $TAG")

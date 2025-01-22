@@ -19,7 +19,7 @@
         android:required="false" />
 
     <application
-        android:name=".utils.MyApplication"
+        android:name=".LanguageApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

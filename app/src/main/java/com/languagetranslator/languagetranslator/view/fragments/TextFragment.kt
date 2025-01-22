@@ -28,10 +28,12 @@ import com.languagetranslator.languagetranslator.R
 import com.languagetranslator.languagetranslator.databinding.FragmentTextBinding
 import com.languagetranslator.languagetranslator.datamodel.supportedLanguages
 import com.languagetranslator.languagetranslator.datamodel.supportedSourceLanguages
-import com.languagetranslator.languagetranslator.utils.Keys
+import com.languagetranslator.languagetranslator.utils.Constant
 import com.languagetranslator.languagetranslator.viewmodel.MyViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
+@AndroidEntryPoint
 class TextFragment : Fragment(), TextToSpeech.OnInitListener {
 
     private val mTranslationUsingGemini by lazy { TranslationUsingGemini() }
@@ -87,14 +89,14 @@ class TextFragment : Fragment(), TextToSpeech.OnInitListener {
 
         mBinding.speakOriginalText.setOnClickListener {
             Log.d(TAG, "setOnClickListener: speak original text")
-            monitorSpeakingState(Keys.ORIGINAL_TEXT)
+            monitorSpeakingState(Constant.ORIGINAL_TEXT)
             val originalText = mBinding.sourceText.text.toString()
             speakOriginalText(originalText)
         }
 
         mBinding.speakTranslatedText.setOnClickListener {
             Log.d(TAG, "setOnClickListener: speak translated text")
-            monitorSpeakingState(Keys.TRANSLATED_TEXT)
+            monitorSpeakingState(Constant.TRANSLATED_TEXT)
             val translatedText = mBinding.targetText.text.toString()
             speakTheTranslatedText(translatedText)
         }
@@ -126,7 +128,7 @@ class TextFragment : Fragment(), TextToSpeech.OnInitListener {
             if (mSpeech.isSpeaking) {
                 mSpeech.stop()
             }
-            resetToPlayState(Keys.TRANSLATED_TEXT)
+            resetToPlayState(Constant.TRANSLATED_TEXT)
         } else {
             mBinding.speakTranslatedText.setImageDrawable(
                 ContextCompat.getDrawable(requireContext(), R.drawable.ic_pause_24)
@@ -152,7 +154,7 @@ class TextFragment : Fragment(), TextToSpeech.OnInitListener {
         if (isOriginalSpeaking) {
             // Stop speaking and switch to play state
             if (mSpeech.isSpeaking) mSpeech.stop()
-            resetToPlayState(Keys.ORIGINAL_TEXT)
+            resetToPlayState(Constant.ORIGINAL_TEXT)
         } else {
             // Start speaking and switch to pause state
             mBinding.speakOriginalText.setImageDrawable(
@@ -176,30 +178,30 @@ class TextFragment : Fragment(), TextToSpeech.OnInitListener {
 
             override fun onDone(utteranceId: String?) {
                 Log.d(TAG, "onDone: speaking finish")
-                if (resource == Keys.ORIGINAL_TEXT) {
+                if (resource == Constant.ORIGINAL_TEXT) {
                     Log.d(TAG, "onDone: reset state for original text")
                     requireActivity().runOnUiThread {
-                        resetToPlayState(Keys.ORIGINAL_TEXT)
+                        resetToPlayState(Constant.ORIGINAL_TEXT)
                     }
                 } else{
                     Log.d(TAG, "onDone: reset state for translate text")
                     requireActivity().runOnUiThread {
-                        resetToPlayState(Keys.TRANSLATED_TEXT)
+                        resetToPlayState(Constant.TRANSLATED_TEXT)
                     }
                 }
             }
 
             override fun onError(utteranceId: String?) {
                 Log.d(TAG, "onError: speaking error")
-                if (resource == Keys.ORIGINAL_TEXT) {
+                if (resource == Constant.ORIGINAL_TEXT) {
                     Log.d(TAG, "onError: error in original")
                     requireActivity().runOnUiThread {
-                        resetToPlayState(Keys.ORIGINAL_TEXT)
+                        resetToPlayState(Constant.ORIGINAL_TEXT)
                     }
                 } else{
                     Log.d(TAG, "onError: error in translated")
                     requireActivity().runOnUiThread {
-                        resetToPlayState(Keys.TRANSLATED_TEXT)
+                        resetToPlayState(Constant.TRANSLATED_TEXT)
                     }
                 }
             }
@@ -213,7 +215,7 @@ class TextFragment : Fragment(), TextToSpeech.OnInitListener {
      * **/
     private fun resetToPlayState(resource: String) {
         Log.d(TAG, "resetToPlayState: resource = $resource")
-        if (resource == Keys.ORIGINAL_TEXT) {
+        if (resource == Constant.ORIGINAL_TEXT) {
             Log.d(TAG, "resetToPlayState: reset state for original")
             requireActivity().runOnUiThread{
                 mBinding.speakOriginalText.setImageDrawable(

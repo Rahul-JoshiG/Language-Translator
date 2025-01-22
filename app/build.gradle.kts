@@ -1,12 +1,21 @@
+import org.gradle.kotlin.dsl.android
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
-
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1"
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+
 }
 
 android {
+    val properties = Properties()
+    val file = FileInputStream("local.properties")
+    properties.load(file)
 
     namespace = "com.languagetranslator.languagetranslator"
     compileSdk = 35
@@ -18,7 +27,11 @@ android {
         versionCode = 1
         versionName = "1.4.1"
 
+
+        buildConfigField("String", "GEMINI_API_KEY", properties.getProperty("GEMINI_API_KEY"))
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
 
     }
 
@@ -30,6 +43,7 @@ android {
                 "proguard-rules.pro"
             )
         }
+
     }
 
     compileOptions {
@@ -74,15 +88,22 @@ dependencies {
     implementation("com.google.android.gms:play-services-mlkit-language-id:17.0.0")
 
     // Coil for image loading (latest stable version)
-    implementation("io.coil-kt:coil:2.4.0")
+    implementation(libs.coil)
 
     // Google AI generative library
-    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+    implementation(libs.generativeai)
 
+    //dagger hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
 
     // Testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

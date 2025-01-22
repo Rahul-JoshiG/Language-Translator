@@ -5,10 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.languagetranslator.languagetranslator.model.Repository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MyViewModel : ViewModel() {
-    private val repository = Repository()
+@HiltViewModel
+class MyViewModel @Inject constructor(private val repository : Repository) : ViewModel() {
 
     private val _translationResult = MutableLiveData<String?>()
     private val _detectLanguage = MutableLiveData<String?>()
