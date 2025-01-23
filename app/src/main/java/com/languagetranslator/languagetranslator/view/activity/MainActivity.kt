@@ -3,7 +3,6 @@ package com.languagetranslator.languagetranslator.view.activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         checkInternetConnection()
 
         //chang the color of status bar
-        changeStatusBarColor()
+        //changeStatusBarColor()
 
         // Apply system bars padding
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { view, insets ->
@@ -106,7 +105,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-    //status bar color change
+    /*//status bar color change
     @Suppress("DEPRECATION")
     private fun changeStatusBarColor() {
         val window = this.window
@@ -116,7 +115,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         window.decorView.systemUiVisibility =
             window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
 
-    }
+    }*/
 
     //All clicks are here
     override fun onClick(view: View?) {

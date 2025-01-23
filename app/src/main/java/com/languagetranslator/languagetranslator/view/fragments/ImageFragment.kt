@@ -97,7 +97,7 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
             if (result.resultCode == RESULT_OK) {
                 val imageBitmap = result.data?.extras?.get("data") as Bitmap
                 imgBitmap = imageBitmap
-                mBinding.imageCardView.visibility = VISIBLE
+                mBinding.imageResult.visibility = VISIBLE
                 mBinding.info.visibility = INVISIBLE
                 mBinding.imageView.load(imageBitmap)
             }

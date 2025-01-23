@@ -97,6 +97,10 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
+    //size
+    implementation (libs.sdp.android)
+    implementation (libs.ssp.android)
+
 
     // Testing dependencies
     testImplementation(libs.junit)
