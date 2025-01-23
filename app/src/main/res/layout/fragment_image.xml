@@ -50,7 +50,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_200sdp"
                 android:contentDescription="@string/translate_image"
-                android:src="@color/color_primary"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@id/target_language"
                 app:layout_constraintEnd_toStartOf="parent"
@@ -114,7 +113,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/translate_image_btn" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/speak_original_text"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -132,11 +131,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:elevation="@dimen/_8sdp"
                 android:indeterminate="true"
                 android:indeterminateTint="@color/color_primary"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/image_result"
+                app:layout_constraintEnd_toEndOf="@id/image_result"
                 app:layout_constraintStart_toStartOf="@+id/image_result"
                 app:layout_constraintTop_toTopOf="@+id/image_result" />
 
@@ -164,15 +164,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:elevation="@dimen/_8sdp"
                 android:indeterminate="true"
                 android:indeterminateTint="@color/white"
-                android:visibility="gone"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@id/translated_text_view"
                 app:layout_constraintEnd_toEndOf="@id/translated_text_view"
                 app:layout_constraintStart_toStartOf="@id/translated_text_view"
                 app:layout_constraintTop_toTopOf="@id/translated_text_view" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/speak_translated_text"
                 android:layout_width="40dp"
                 android:layout_height="40dp"

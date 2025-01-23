@@ -34,6 +34,7 @@ class SpeechFragment : Fragment(), TextToSpeech.OnInitListener {
 
     private var _binding: FragmentSpeechBinding? = null
     private val mBinding get() = _binding!!
+
     private lateinit var mMyViewModel: MyViewModel
     private lateinit var mSpeech: TextToSpeech
 
@@ -60,8 +61,15 @@ class SpeechFragment : Fragment(), TextToSpeech.OnInitListener {
         val targetLanguage =
             supportedLanguages[mBinding.spinnerTargetLanguage.selectedItemPosition].displayName
         mMyViewModel.translateText(target = targetLanguage, data = text.orEmpty())
+
+        mMyViewModel.isTranslating.observe(viewLifecycleOwner){isLoading->
+            if(isLoading){
+                mBinding.progressBar.visibility = VISIBLE
+            }else{
+                mBinding.progressBar.visibility = INVISIBLE
+            }
+        }
         mMyViewModel.translationResult.observe(viewLifecycleOwner, Observer { result ->
-            mBinding.progressBar.visibility = INVISIBLE
             mBinding.speechTranslateText.text = result ?: "Translation Failed"
         })
     }

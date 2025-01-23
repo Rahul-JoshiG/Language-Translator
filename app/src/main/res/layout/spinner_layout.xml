@@ -2,12 +2,7 @@
 <androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:elevation="4dp"
-    android:textColor="@color/white"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="10dp"
-    android:shadowColor="@color/black"
-    android:shadowDx="1"
-    android:shadowDy="1"
-    android:shadowRadius="2"
-    android:textSize="16sp" />
+    android:elevation="@dimen/_2sdp"
+    android:padding="@dimen/_15sdp"
+    android:textSize="@dimen/_14ssp"
+    android:fontFamily="@font/roboto"/>
