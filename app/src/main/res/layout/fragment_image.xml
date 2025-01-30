@@ -51,7 +51,7 @@
                 android:layout_height="@dimen/_200sdp"
                 android:contentDescription="@string/translate_image"
                 android:visibility="invisible"
-                android:scaleType="centerCrop"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toTopOf="@id/target_language"
                 app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

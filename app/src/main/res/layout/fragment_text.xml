@@ -28,7 +28,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_constraintTop_toTopOf="parent"
                 app:title="Text Translator"
-                app:navigationIcon="@drawable/ic_menu"/>
+                app:titleCentered="true"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/linear_layout"

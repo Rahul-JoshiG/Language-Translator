@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
         val window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.statusBarColor = this.resources.getColor(R.color.color_primary)
+        window.statusBarColor = this.resources.getColor(R.color.color_primary_variant)
         window.decorView.systemUiVisibility =
             window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
     }

@@ -3,38 +3,5 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:statusBarColor">@color/color_primary_variant</item>
     </style>
-    <!--
-            <item name="colorPrimary">#000000</item>
-            <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-            <item name="colorAccent">@color/colorAccent</item>
-            <item name="android:windowSplashScreenBackground" tools:ignore="NewApi">@color/black</item>
-
-            <item name="android:statusBarColor">@color/colorPrimaryDark</item>
-            <item name="android:windowLightStatusBar">false</item>
-        </style>
-
-        <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
-            &lt;!&ndash; Set primary color to white &ndash;&gt;
-            <item name="colorPrimary">#FFFFFF</item>
-            <item name="colorPrimaryDark">@color/white</item>
-            <item name="colorAccent">#D9D9D9</item>
-            &lt;!&ndash; Set status bar color to black (this will keep the status bar dark) &ndash;&gt;
-            <item name="android:statusBarColor">@color/white</item>
-            &lt;!&ndash; Ensure icons are white in the status bar &ndash;&gt;
-            <item name="android:windowLightStatusBar">true</item>
-            &lt;!&ndash; Set splash screen background to white &ndash;&gt;
-            <item name="android:windowSplashScreenBackground" tools:ignore="NewApi">@color/white</item>
-            &lt;!&ndash; Set background color for the entire activity to white &ndash;&gt;
-            <item name="android:windowBackground">@android:color/white</item>
-        </style>
-
-
-        <style name="Theme.LanguageTranslator" parent="Theme.AppCompat.Light.NoActionBar">
-            <item name="colorPrimary">#000000</item>
-            <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-            <item name="colorAccent">@color/colorAccent</item>
-            <item name="android:windowSplashScreenBackground" tools:ignore="NewApi">@color/black</item>
-        </style>
-    -->
 
 </resources>
