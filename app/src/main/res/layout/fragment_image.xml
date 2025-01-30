@@ -116,8 +116,8 @@
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/speak_original_text"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@drawable/play_pause_background"
                 android:contentDescription="@string/play_and_pause_image"
@@ -176,8 +176,8 @@
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/speak_translated_text"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@drawable/play_pause_background"
                 android:contentDescription="@string/play_and_pause_image"
