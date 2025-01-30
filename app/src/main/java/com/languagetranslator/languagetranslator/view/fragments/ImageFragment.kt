@@ -42,6 +42,7 @@ import java.util.Locale
 class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListener {
     private var _binding: FragmentImageBinding? = null
     private val mBinding get() = _binding!!
+
     private lateinit var mMyViewModel: MyViewModel
     private val mTranslationUsingGemini by lazy { TranslationUsingGemini() }
     private lateinit var mSpeech: TextToSpeech

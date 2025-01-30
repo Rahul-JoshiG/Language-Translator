@@ -21,7 +21,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.languagetranslator.languagetranslator.R
 import com.languagetranslator.languagetranslator.databinding.FragmentTextBinding
 import com.languagetranslator.languagetranslator.datamodel.supportedLanguages
-import com.languagetranslator.languagetranslator.datamodel.supportedSourceLanguages
 import com.languagetranslator.languagetranslator.utils.Constant
 import com.languagetranslator.languagetranslator.viewmodel.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,7 +71,7 @@ class TextFragment : Fragment(), TextToSpeech.OnInitListener {
         mBinding.translateButton.setOnClickListener {
             Log.d(TAG, "setOnClickListener: ")
             val inputText = mBinding.sourceText.text.toString()
-            if (inputText.isNullOrEmpty()) {
+            if (inputText.isEmpty()) {
                 ToastHelper.toast("No text available!!!")
                 return@setOnClickListener
             } else {
@@ -261,7 +260,7 @@ class TextFragment : Fragment(), TextToSpeech.OnInitListener {
         val sourceAdapter = ArrayAdapter(
             requireContext(),
             R.layout.spinner_layout,
-            supportedSourceLanguages.map { it.displayName }
+            supportedLanguages.map { it.displayName }
         )
         sourceAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1)
         mBinding.sourceLang.adapter = sourceAdapter
