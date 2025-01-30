@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/textFragment">
+
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="com.languagetranslator.languagetranslator.view.fragments.ImageFragment"
+        android:label="ImageFragment" >
+        <action
+            android:id="@+id/action_imageFragment_self"
+            app:destination="@id/imageFragment" />
+        <action
+            android:id="@+id/action_imageFragment_to_textFragment"
+            app:destination="@id/textFragment" />
+        <action
+            android:id="@+id/action_imageFragment_to_speechFragment"
+            app:destination="@id/speechFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/textFragment"
+        android:name="com.languagetranslator.languagetranslator.view.fragments.TextFragment"
+        android:label="TextFragment" >
+        <action
+            android:id="@+id/action_textFragment_to_imageFragment"
+            app:destination="@id/imageFragment" />
+        <action
+            android:id="@+id/action_textFragment_to_speechFragment"
+            app:destination="@id/speechFragment" />
+        <action
+            android:id="@+id/action_textFragment_self"
+            app:destination="@id/textFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/speechFragment"
+        android:name="com.languagetranslator.languagetranslator.view.fragments.SpeechFragment"
+        android:label="SpeechFragment" >
+        <action
+            android:id="@+id/action_speechFragment_to_textFragment"
+            app:destination="@id/textFragment" />
+        <action
+            android:id="@+id/action_speechFragment_to_imageFragment"
+            app:destination="@id/imageFragment" />
+        <action
+            android:id="@+id/action_speechFragment_self"
+            app:destination="@id/speechFragment" />
+    </fragment>
+</navigation>

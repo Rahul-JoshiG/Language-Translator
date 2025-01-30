@@ -7,6 +7,7 @@ import android.net.NetworkCapabilities
 
 object NetworkUtils {
     private lateinit var mContext: Context
+
     @SuppressLint("StaticFieldLeak")
     fun initNetworkUtils(context: Context){
         mContext = context.applicationContext

@@ -12,6 +12,7 @@ class LanguageApplication : Application() {
         Log.d(TAG, "onCreate: $TAG")
         ToastHelper.initToast(this)
         NetworkUtils.initNetworkUtils(this)
+        NetworkUtils.isInternetAvailable()
     }
     companion object{
         private const val TAG = "MyApplication"

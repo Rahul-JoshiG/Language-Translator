@@ -5,7 +5,6 @@ package com.languagetranslator.languagetranslator.view.fragments
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
-import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -20,20 +19,14 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import coil.load
-import com.google.mlkit.common.model.DownloadConditions
-import com.google.mlkit.nl.languageid.LanguageIdentification
-import com.google.mlkit.nl.translate.Translation
-import com.google.mlkit.nl.translate.TranslatorOptions
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -49,6 +42,7 @@ import java.util.Locale
 class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListener {
     private var _binding: FragmentImageBinding? = null
     private val mBinding get() = _binding!!
+
     private lateinit var mMyViewModel: MyViewModel
     private val mTranslationUsingGemini by lazy { TranslationUsingGemini() }
     private lateinit var mSpeech: TextToSpeech
@@ -84,7 +78,6 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
         mSpeech = TextToSpeech(requireContext(), this)
 
         initCameraLauncher()
-        setUpToolbar()
         setUpSpinner()
         seOnClickListener()
     }
@@ -97,9 +90,13 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
             if (result.resultCode == RESULT_OK) {
                 val imageBitmap = result.data?.extras?.get("data") as Bitmap
                 imgBitmap = imageBitmap
-                mBinding.imageCardView.visibility = VISIBLE
-                mBinding.info.visibility = INVISIBLE
-                mBinding.imageView.load(imageBitmap)
+                mBinding.apply {
+                    imageView.visibility = VISIBLE
+                    addImageView.isEnabled = false
+                    addImageView.visibility = INVISIBLE
+                    info.visibility = INVISIBLE
+                    imageView.load(imageBitmap)
+                }
             }
         }
     }
@@ -125,12 +122,6 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
         mBinding.speakTranslatedText.setOnClickListener(this)
     }
 
-    private fun setUpToolbar() {
-        Log.d(TAG, "setUpToolbar: toolbar set upping at image fragment")
-        (requireActivity() as AppCompatActivity).apply {
-            setSupportActionBar(mBinding.imageToolbar)
-        }
-    }
 
 
     private fun checkPermission(): Boolean {
@@ -342,7 +333,6 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
                     Log.d(TAG, "Text extracted: $resultText")
                     mBinding.progressBarOrg.visibility = INVISIBLE
                     mBinding.imageResult.text = resultText
-
                     //identifyingLanguage(resultText)
                     mTranslationUsingGemini.translateItUsingGemini(resultText)
                 } else {
@@ -401,7 +391,6 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
         @SuppressLint("SetTextI18n")
         fun translateItUsingGemini(text: String) {
             Log.d(TAG, "translateItUsingGemini: ")
-            mBinding.progressBarTrs.visibility = VISIBLE
 
             val selectLanguage =
                 supportedLanguages[mBinding.targetLanguage.selectedItemPosition].displayName
@@ -410,122 +399,21 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
             // Trigger translation
             mMyViewModel.translateText(selectLanguage, text)
 
+            mMyViewModel.isTranslating.observe(viewLifecycleOwner) { isLoading ->
+                if (isLoading) {
+                    mBinding.progressBarTrs.visibility = VISIBLE
+                } else {
+                    mBinding.progressBarTrs.visibility = INVISIBLE
+                }
+            }
             // Observe the result
             mMyViewModel.translationResult.observe(viewLifecycleOwner, Observer { result ->
-                mBinding.progressBarTrs.visibility = INVISIBLE
                 if(result.isNullOrEmpty()){
-                    mBinding.progressBarTrs.visibility = INVISIBLE
                     mBinding.translatedTextView.text = "Translation failed"
                 }else{
-                    mBinding.progressBarTrs.visibility = INVISIBLE
                     mBinding.translatedTextView.text = result
                 }
             })
-        }
-    }
-
-    inner class TranslationUsingFirebaseMlKit {
-        private fun identifyingLanguage(text: String) {
-            Log.d(TAG, "identifyingLanguage: identifying the language of $text")
-
-            val languageIdentifier = LanguageIdentification.getClient()
-            languageIdentifier.identifyLanguage(text)
-                .addOnSuccessListener { languageCode ->
-                    if (languageCode == "und") {
-                        Log.d(TAG, "identifyingLanguage: Can't identify language")
-                        Toast.makeText(
-                            requireContext(),
-                            "Can't identify language",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-
-                    } else {
-                        Log.d(TAG, "identifyingLanguage: language found : $languageCode")
-                        translateText(text, languageCode)
-                    }
-                }
-                .addOnFailureListener {
-                    Log.d(TAG, "identifyingLanguage: failed...")
-                }
-        }
-
-        private fun translateText(originalText: String, sourceLanguageCode: String) {
-            Log.d(TAG, "translateText: Translating text")
-
-            // Get the selected target language code
-            val selectLanguageCode =
-                supportedLanguages[mBinding.targetLanguage.selectedItemPosition].code
-            Log.d(TAG, "translateText: Source language code: $sourceLanguageCode")
-            Log.d(TAG, "translateText: Target language code: $selectLanguageCode")
-
-            // Validate input
-            if (originalText.isEmpty()) {
-                Toast.makeText(
-                    requireContext(),
-                    "No text provided to translate",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return
-            }
-            if (selectLanguageCode.isEmpty()) {
-                Toast.makeText(requireContext(), "No target language selected", Toast.LENGTH_SHORT)
-                    .show()
-                return
-            }
-            if (sourceLanguageCode == "und") {
-                Toast.makeText(requireContext(), "Language unidentified", Toast.LENGTH_SHORT).show()
-                return
-            }
-
-            // Create TranslatorOptions
-            val options = TranslatorOptions.Builder()
-                .setSourceLanguage(sourceLanguageCode)
-                .setTargetLanguage(selectLanguageCode)
-                .build()
-
-            val translator = Translation.getClient(options)
-            val conditions = DownloadConditions.Builder().build()
-
-            val progressDialog = ProgressDialog(requireContext()).apply {
-                setMessage("Downloading translation model...")
-                setCancelable(false)
-                show()
-            }
-
-            translator.downloadModelIfNeeded(conditions)
-                .addOnSuccessListener {
-                    progressDialog.dismiss()
-                    Toast.makeText(
-                        requireContext(),
-                        "Model successfully Downloaded",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    //translating source to target
-                    translator.translate(originalText)
-                        .addOnSuccessListener { result ->
-                            Log.d(TAG, "translateText: original text = $originalText")
-                            Log.d(TAG, "translateText: result = $result")
-                            mBinding.translatedTextView.text = result
-                        }
-                        .addOnFailureListener { e ->
-                            Log.d(TAG, "Error during translation: ${e.message}")
-                            Toast.makeText(
-                                requireContext(),
-                                "Failed to translate text",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                }
-                .addOnFailureListener { e ->
-                    Log.d(TAG, "Error downloading model: ${e.message}")
-                    progressDialog.dismiss()
-                    Toast.makeText(
-                        requireContext(),
-                        "Failed to download translation model",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
         }
     }
 }

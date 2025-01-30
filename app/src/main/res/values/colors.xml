@@ -1,11 +1,22 @@
 <resources>
-    <color name="black">#000000</color>
+
+        <color name="colorPrimary">#000000</color>
+        <color name="colorPrimaryDark">#000000</color>
+        <color name="colorPrimaryLight">#2F2F2F</color>
+        <color name="colorAccent">#444444</color>
+
+    <color  name="orange">#FF6600</color>
+    <color  name="blue">#003366</color>
+    <color  name="black">#010101</color>
     <color name="white">#FFFFFFFF</color>
-
-    <color name="colorPrimary">#000000</color>
-    <color name="colorPrimaryDark">#000000</color>
-    <color name="colorPrimaryLight">#2F2F2F</color>
-    <color name="colorAccent">#444444</color>
+    <color name="mix">#F7F2F9</color>
+    <color name="blue_dark">#001B35</color>
+    <color name="blue400">#003366</color>
 
 
+    <color name="color_primary">@color/blue</color>
+    <color name="color_secondary">@color/orange</color>
+    <color name="box_background">@color/mix</color>
+    <color name="color_primary_variant">@color/blue_dark</color>
+    <color name="color_image">@color/blue400</color>
 </resources>
