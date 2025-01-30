@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://github.com/Rahul-JoshiG/Language-Translator/blob/master/app/src/main/res/drawable/applogo.png" alt="App Logo" style="width: 150px; height: 150px;" />
+    <img src="https://github.com/Rahul-JoshiG/Language-Translator/blob/master/app/src/main/res/drawable/app_logo.png" alt="App Logo" style="width: 150px; height: 150px;" />
 </div>
 
 <h1 align="center">Language Translator App</h1>
