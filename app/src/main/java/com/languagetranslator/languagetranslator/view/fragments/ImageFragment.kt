@@ -342,7 +342,15 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
                     Log.d(TAG, "Text extracted: $resultText")
                     mBinding.progressBarOrg.visibility = INVISIBLE
                     mBinding.imageResult.text = resultText
-                    //identifyingLanguage(resultText)
+
+                    // Calculate accuracy
+                    val groundTruth = "This is the actual text in the image" // Replace with actual ground truth
+                    val cer = calculateCER(groundTruth, resultText)
+                    val wer = calculateWER(groundTruth, resultText)
+                    Log.d(TAG, "Character Error Rate (CER): $cer")
+                    Log.d(TAG, "Word Error Rate (WER): $wer")
+
+                    // Trigger translation
                     mTranslationUsingGemini.translateItUsingGemini(resultText)
                 } else {
                     ToastHelper.toast("No text found in the image")
@@ -353,8 +361,64 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
                 Log.e(TAG, "Failed to extract text: ${e.message}")
                 ToastHelper.toast("Failed to extract the text")
                 mBinding.progressBarOrg.visibility = INVISIBLE
-
             }
+    }
+
+    private fun calculateCER(groundTruth: String, extractedText: String): Double {
+        val lenGroundTruth = groundTruth.length
+        if (lenGroundTruth == 0) return if (extractedText.isEmpty()) 0.0 else 1.0
+
+        val distance = levenshteinDistance(groundTruth, extractedText)
+        return distance.toDouble() / lenGroundTruth
+    }
+
+    fun levenshteinDistance(s1: String, s2: String): Int {
+        val dp = Array(s1.length + 1) { IntArray(s2.length + 1) }
+
+        for (i in 0..s1.length) {
+            for (j in 0..s2.length) {
+                when {
+                    i == 0 -> dp[i][j] = j
+                    j == 0 -> dp[i][j] = i
+                    else -> dp[i][j] = minOf(
+                        dp[i - 1][j - 1] + if (s1[i - 1] == s2[j - 1]) 0 else 1, // Substitution
+                        dp[i - 1][j] + 1, // Deletion
+                        dp[i][j - 1] + 1  // Insertion
+                    )
+                }
+            }
+        }
+        return dp[s1.length][s2.length]
+    }
+
+    private fun calculateWER(groundTruth: String, extractedText: String): Double {
+        val groundTruthWords = groundTruth.split("\\s+".toRegex())
+        val extractedWords = extractedText.split("\\s+".toRegex())
+
+        val lenGroundTruth = groundTruthWords.size
+        if (lenGroundTruth == 0) return if (extractedWords.isEmpty()) 0.0 else 1.0
+
+        val distance = levenshteinDistance(groundTruthWords, extractedWords)
+        return distance.toDouble() / lenGroundTruth
+    }
+
+    private fun levenshteinDistance(words1: List<String>, words2: List<String>): Int {
+        val dp = Array(words1.size + 1) { IntArray(words2.size + 1) }
+
+        for (i in 0..words1.size) {
+            for (j in 0..words2.size) {
+                when {
+                    i == 0 -> dp[i][j] = j
+                    j == 0 -> dp[i][j] = i
+                    else -> dp[i][j] = minOf(
+                        dp[i - 1][j - 1] + if (words1[i - 1] == words2[j - 1]) 0 else 1, // Substitution
+                        dp[i - 1][j] + 1, // Deletion
+                        dp[i][j - 1] + 1  // Insertion
+                    )
+                }
+            }
+        }
+        return dp[words1.size][words2.size]
     }
 
     override fun onDestroy() {
