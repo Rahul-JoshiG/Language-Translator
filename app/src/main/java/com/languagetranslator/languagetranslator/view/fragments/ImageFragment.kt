@@ -8,6 +8,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.speech.tts.TextToSpeech
@@ -53,6 +54,7 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
     private lateinit var imgBitmap: Bitmap
 
     private lateinit var cameraLauncher : ActivityResultLauncher<Intent>
+    private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -80,6 +82,7 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
         mSpeech = TextToSpeech(requireContext(), this)
 
         initCameraLauncher()
+        initGalleryLauncher()
         setUpSpinner()
         seOnClickListener()
     }
@@ -98,6 +101,33 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
                     addImageView.visibility = INVISIBLE
                     info.visibility = INVISIBLE
                     imageView.load(imageBitmap)
+                }
+            }
+        }
+    }
+
+    private fun initGalleryLauncher(){
+        galleryLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val uri = result.data?.data
+                if (uri != null) {
+                    try {
+                        val inputStream = requireContext().contentResolver.openInputStream(uri)
+                        val imageBitmap = BitmapFactory.decodeStream(inputStream)
+                        imgBitmap = imageBitmap
+                        mBinding.apply {
+                            imageView.visibility = VISIBLE
+                            addImageView.isEnabled = false
+                            addImageView.visibility = INVISIBLE
+                            info.visibility = INVISIBLE
+                            imageView.load(imageBitmap)
+                        }
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Failed to load image from gallery: ${e.message}")
+                        ToastHelper.toast("Failed to load image from gallery")
+                    }
                 }
             }
         }
@@ -157,12 +187,45 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
         }
     }
 
+    private fun openGallery() {
+        if (checkPermission()) {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            galleryLauncher.launch(intent)
+        } else {
+            requestPermission()
+        }
+    }
+    private fun showImageSourceDialog() {
+        val options = arrayOf("Camera", "Gallery")
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle("Select Image Source")
+            .setItems(options) { dialog, which ->
+                when (which) {
+                    0 -> { // Camera option
+                        if (checkPermission()) {
+                            openCamera()
+                        } else {
+                            requestPermission()
+                        }
+                    }
+                    1 -> { // Gallery option
+                        openGallery()
+                    }
+                }
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+
     override fun onClick(p0: View?) {
         Log.d(TAG, "onClick: clicking $p0")
         when (p0?.id) {
             mBinding.addImageView.id -> {
                 if (checkPermission()) {
-                    openCamera()
+                    showImageSourceDialog()
                 } else {
                     requestPermission()
                 }

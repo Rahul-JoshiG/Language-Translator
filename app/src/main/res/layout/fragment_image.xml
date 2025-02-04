@@ -52,6 +52,7 @@
                 android:contentDescription="@string/translate_image"
                 android:visibility="invisible"
                 android:orientation="vertical"
+                android:layout_marginTop="@dimen/_10sdp"
                 app:layout_constraintBottom_toTopOf="@id/target_language"
                 app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
