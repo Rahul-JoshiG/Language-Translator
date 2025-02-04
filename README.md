@@ -90,7 +90,7 @@ The Language Translator App empowers users to communicate and understand languag
 
 | **Text Translation Working** | **Image Translation Working** | **Speech Translation Working** |
 |-------------------------------|-------------------------------|--------------------------------|
-| ![Text Translation Working](https://github.com/user-attachments/assets/89a37f59-f657-48a5-8615-83f86e07e710) | ![Image Translation Working](https://github.com/user-attachments/assets/a2a0613c-ba3a-4508-a7ea-ea732553058e) | ![Speech Translation Working](https://github.com/user-attachments/assets/f5e21d10-5093-4575-b4a6-b893b28408f9) |
+| ![textworking](https://github.com/user-attachments/assets/24e181cc-cc74-4fb4-9e73-9eb6428858a4) | ![imageworking](https://github.com/user-attachments/assets/6a657aff-8059-4c0d-99c8-5f0f5de00d91) | ![speechworking](https://github.com/user-attachments/assets/a37ad555-096c-4818-b650-d6f11d127c03) |
 
 
 ---
