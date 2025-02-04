@@ -22,6 +22,8 @@ import com.languagetranslator.languagetranslator.R
 import com.languagetranslator.languagetranslator.databinding.FragmentTextBinding
 import com.languagetranslator.languagetranslator.datamodel.supportedLanguages
 import com.languagetranslator.languagetranslator.utils.Constant
+import com.languagetranslator.languagetranslator.utils.DialogUtils
+import com.languagetranslator.languagetranslator.utils.NetworkUtils
 import com.languagetranslator.languagetranslator.viewmodel.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
@@ -60,6 +62,13 @@ class TextFragment : Fragment(), TextToSpeech.OnInitListener {
         setUpToolbar()
         setUpSpinner()
         setOnClickListener()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!NetworkUtils.isInternetAvailable(requireActivity())) {
+            DialogUtils.showNoInternetDialog(requireActivity())
+        }
     }
 
     /**

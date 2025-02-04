@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -15,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.languagetranslator.languagetranslator.R
 import com.languagetranslator.languagetranslator.databinding.ActivityMainBinding
+import com.languagetranslator.languagetranslator.utils.DialogUtils
 import com.languagetranslator.languagetranslator.utils.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,9 +32,6 @@ class MainActivity : AppCompatActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         applyWindowInsets()
-
-        // Check internet connection
-        checkInternetConnection()
 
         // Change the color of the status bar
         changeStatusBarColor()
@@ -83,34 +80,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkInternetConnection() {
-        Log.d(TAG, "checkInternet: checking internet connection")
-        if (NetworkUtils.isInternetAvailable()) {
-            Log.d(TAG, "checkInternetConnection: internet connection is available")
-        } else {
-            showNoInternetDialog()
-        }
-    }
-
-    fun showNoInternetDialog() {
-        val dialog = AlertDialog.Builder(this)
-            .setTitle("No Internet Connection")
-            .setMessage("Please check your internet connection.")
-            .setCancelable(false)
-            .setPositiveButton("Retry") { _, _ ->
-                if (NetworkUtils.isInternetAvailable()) {
-                    ToastHelper.toast("Internet is now available!")
-                } else {
-                    showNoInternetDialog() // Retry if still no internet
-                }
-            }
-            .setNegativeButton("Close App") { _, _ ->
-                finish()
-            }
-            .create()
-        dialog.show()
-    }
-
     @Suppress("DEPRECATION")
     private fun changeStatusBarColor() {
         val window = this.window
@@ -119,6 +88,13 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = this.resources.getColor(R.color.color_primary_variant)
         window.decorView.systemUiVisibility =
             window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!NetworkUtils.isInternetAvailable(this)) {
+            DialogUtils.showNoInternetDialog(this)
+        }
     }
 
     companion object {

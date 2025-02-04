@@ -25,6 +25,8 @@ import com.languagetranslator.languagetranslator.R
 import com.languagetranslator.languagetranslator.databinding.FragmentSpeechBinding
 import com.languagetranslator.languagetranslator.datamodel.supportedLanguages
 import com.languagetranslator.languagetranslator.utils.Constant
+import com.languagetranslator.languagetranslator.utils.DialogUtils
+import com.languagetranslator.languagetranslator.utils.NetworkUtils
 import com.languagetranslator.languagetranslator.viewmodel.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
@@ -226,6 +228,13 @@ class SpeechFragment : Fragment(), TextToSpeech.OnInitListener {
             putExtra(RecognizerIntent.EXTRA_PROMPT, "Say Something...")
         }
         activityResultLauncher.launch(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!NetworkUtils.isInternetAvailable(requireActivity())) {
+            DialogUtils.showNoInternetDialog(requireActivity())
+        }
     }
 
     private fun setUpSpinner() {

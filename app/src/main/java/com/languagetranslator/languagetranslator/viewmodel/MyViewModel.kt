@@ -31,8 +31,13 @@ class MyViewModel @Inject constructor(private val repository: Repository) : View
         _isTranslating.postValue(true)
         viewModelScope.launch {
             val result = repository.getTranslateDataFromGemini(target, data)
-            _translationResult.postValue(result.toString())
-            _isTranslating.postValue(false)
+            if(!result.isNullOrEmpty()){
+                _translationResult.postValue(result.toString())
+                _isTranslating.postValue(false)
+            }else{
+                _translationResult.postValue("Server failed...")
+                _isTranslating.postValue(false)
+            }
         }
     }
 

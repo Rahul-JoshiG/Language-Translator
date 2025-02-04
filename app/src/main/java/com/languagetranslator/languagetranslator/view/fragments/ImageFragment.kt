@@ -34,6 +34,8 @@ import com.languagetranslator.languagetranslator.R
 import com.languagetranslator.languagetranslator.databinding.FragmentImageBinding
 import com.languagetranslator.languagetranslator.datamodel.supportedLanguages
 import com.languagetranslator.languagetranslator.utils.Constant
+import com.languagetranslator.languagetranslator.utils.DialogUtils
+import com.languagetranslator.languagetranslator.utils.NetworkUtils
 import com.languagetranslator.languagetranslator.viewmodel.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
@@ -112,6 +114,13 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_1)
         mBinding.targetLanguage.adapter = adapter
         mBinding.targetLanguage.setSelection(29)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!NetworkUtils.isInternetAvailable(requireActivity())) {
+            DialogUtils.showNoInternetDialog(requireActivity())
+        }
     }
 
     private fun seOnClickListener() {
