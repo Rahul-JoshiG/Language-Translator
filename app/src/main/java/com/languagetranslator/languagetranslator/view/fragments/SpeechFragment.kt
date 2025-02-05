@@ -30,15 +30,18 @@ import com.languagetranslator.languagetranslator.utils.NetworkUtils
 import com.languagetranslator.languagetranslator.viewmodel.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class SpeechFragment : Fragment(), TextToSpeech.OnInitListener {
+class SpeechFragment : Fragment(){
+
+    @Inject
+    lateinit var mSpeech: TextToSpeech
 
     private var _binding: FragmentSpeechBinding? = null
-    private val mBinding get() = _binding!!
 
+    private val mBinding get() = _binding!!
     private lateinit var mMyViewModel: MyViewModel
-    private lateinit var mSpeech: TextToSpeech
 
     // Declare the ActivityResultLauncher for speech recognition
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
@@ -91,7 +94,6 @@ class SpeechFragment : Fragment(), TextToSpeech.OnInitListener {
         Log.d(TAG, "onViewCreated: view created for speech fragment")
 
         // Initialize the TextToSpeech and ActivityResultLauncher
-        mSpeech = TextToSpeech(requireContext(), this)
         initActivityResultLauncher()  // Initialize ActivityResultLauncher
         setUpToolbar()
         setUpSpinner()
@@ -257,21 +259,6 @@ class SpeechFragment : Fragment(), TextToSpeech.OnInitListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onInit(status: Int) {
-        Log.d(TAG, "onInit: init the speech")
-        if (status == TextToSpeech.SUCCESS) {
-            // Set the language
-            val result = mSpeech.setLanguage(Locale.US)
-            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Log.d(TAG, "Language not supported or missing data")
-            } else {
-                Log.d(TAG, "TextToSpeech initialized successfully")
-            }
-        } else {
-            Log.d(TAG, "TextToSpeech initialization failed")
-        }
     }
 
     companion object {

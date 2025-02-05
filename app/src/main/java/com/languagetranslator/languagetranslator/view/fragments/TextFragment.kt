@@ -27,16 +27,19 @@ import com.languagetranslator.languagetranslator.utils.NetworkUtils
 import com.languagetranslator.languagetranslator.viewmodel.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class TextFragment : Fragment(), TextToSpeech.OnInitListener {
+class TextFragment : Fragment() {
+
+    @Inject
+    lateinit var mSpeech: TextToSpeech
 
     private val mTranslationUsingGemini by lazy { TranslationUsingGemini() }
     private var _binding: FragmentTextBinding? = null
     private val mBinding get() = _binding!!
 
-    private lateinit var mMyViewModel: MyViewModel
-    private lateinit var mSpeech: TextToSpeech
+    private lateinit var mMyViewModel : MyViewModel
 
     //view is creating
     override fun onCreateView(
@@ -57,7 +60,6 @@ class TextFragment : Fragment(), TextToSpeech.OnInitListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "onViewCreated: view created main of text fragment")
-        mSpeech = TextToSpeech(requireContext(), this)
 
         setUpToolbar()
         setUpSpinner()
@@ -298,21 +300,6 @@ class TextFragment : Fragment(), TextToSpeech.OnInitListener {
         if (mSpeech.isSpeaking) {
             mSpeech.stop()
             mSpeech.shutdown()
-        }
-    }
-
-    override fun onInit(status: Int) {
-        Log.d(TAG, "onInit: status = $status")
-        if (status == TextToSpeech.SUCCESS) {
-            // Set the language
-            val result = mSpeech.setLanguage(Locale.US)
-            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Log.d(TAG, "Language not supported or missing data")
-            } else {
-                Log.d(TAG, "TextToSpeech initialized successfully")
-            }
-        } else {
-            Log.d(TAG, "TextToSpeech initialization failed")
         }
     }
 

@@ -40,20 +40,24 @@ import com.languagetranslator.languagetranslator.utils.NetworkUtils
 import com.languagetranslator.languagetranslator.viewmodel.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListener {
+class ImageFragment : Fragment(), View.OnClickListener{
+
+    @Inject
+    lateinit var mSpeech: TextToSpeech // Injected by Hilt
+
     private var _binding: FragmentImageBinding? = null
     private val mBinding get() = _binding!!
 
     private lateinit var mMyViewModel: MyViewModel
     private val mTranslationUsingGemini by lazy { TranslationUsingGemini() }
-    private lateinit var mSpeech: TextToSpeech
 
     private val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
     private lateinit var imgBitmap: Bitmap
 
-    private lateinit var cameraLauncher : ActivityResultLauncher<Intent>
+    private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
     private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -79,7 +83,8 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "onViewCreated: view created for fragment image")
-        mSpeech = TextToSpeech(requireContext(), this)
+
+        // Set the OnInitListener
 
         initCameraLauncher()
         initGalleryLauncher()
@@ -106,7 +111,7 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
         }
     }
 
-    private fun initGalleryLauncher(){
+    private fun initGalleryLauncher() {
         galleryLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
@@ -133,10 +138,10 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
         }
     }
 
-
     private fun setUpSpinner() {
         Log.d(TAG, "setUpSpinner: set upping spinner")
-        val adapter = ArrayAdapter(requireContext(),
+        val adapter = ArrayAdapter(
+            requireContext(),
             R.layout.spinner_layout,
             supportedLanguages.map { it.displayName }
         )
@@ -160,8 +165,6 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
         mBinding.speakOriginalText.setOnClickListener(this)
         mBinding.speakTranslatedText.setOnClickListener(this)
     }
-
-
 
     private fun checkPermission(): Boolean {
         return ContextCompat.checkSelfPermission(
@@ -195,6 +198,7 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
             requestPermission()
         }
     }
+
     private fun showImageSourceDialog() {
         val options = arrayOf("Camera", "Gallery")
         androidx.appcompat.app.AlertDialog.Builder(requireContext())
@@ -219,7 +223,6 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
             .show()
     }
 
-
     override fun onClick(p0: View?) {
         Log.d(TAG, "onClick: clicking $p0")
         when (p0?.id) {
@@ -234,8 +237,9 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
             mBinding.translateImageBtn.id -> {
                 if (mBinding.imageView.isShown) {
                     extractTextAndTranslate()
-                } else
+                } else {
                     ToastHelper.toast("No image found")
+                }
             }
 
             mBinding.speakOriginalText.id -> {
@@ -259,38 +263,29 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
                     speakTheTranslatedText(translatedText)
                 }
             }
-
         }
     }
 
-    /**
-     * Speaks the provided text and toggles between play and pause states.
-     */
-    private var isOriginalSpeaking = false // Tracks the speaking state
+    private var isOriginalSpeaking = false
     private fun speakOriginalText(originalText: String) {
         Log.d(TAG, "speakOriginalText: Text to speak = $originalText")
 
-        // Validate the text input
         if (originalText.isEmpty()) {
             ToastHelper.toast("No text available to speak!!!")
             return
         }
 
         if (isOriginalSpeaking) {
-            // Stop speaking and switch to play state
             if (mSpeech.isSpeaking) mSpeech.stop()
             resetToPlayState(Constant.ORIGINAL_TEXT)
         } else {
-            // Start speaking and switch to pause state
             mBinding.speakOriginalText.setImageDrawable(getDrawable(requireContext(), R.drawable.ic_pause_24))
             speakText(originalText)
             isOriginalSpeaking = true
         }
     }
-    /**
-     * Speak the translated text and toggle the play and pause states.
-     * **/
-    var isTranslatedSpeaking = false
+
+    private var isTranslatedSpeaking = false
     private fun speakTheTranslatedText(text: String) {
         Log.d(TAG, "speakTheTranslatedText: Text=$text")
         if (text.isEmpty()) {
@@ -321,57 +316,38 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
             isTranslatedSpeaking = true
         }
     }
-    private fun monitorPlayState(resource: String){
+
+    private fun monitorPlayState(resource: String) {
         Log.d(TAG, "monitorPlayState: resource = $resource")
-        mSpeech.setOnUtteranceProgressListener(object: UtteranceProgressListener() {
+        mSpeech.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
             override fun onStart(utteranceId: String?) {
                 Log.d(TAG, "onStart: speaking starts")
             }
 
             override fun onDone(utteranceId: String?) {
                 Log.d(TAG, "onDone: speaking done for $resource")
-                if(resource == Constant.ORIGINAL_TEXT){
-                    Log.d(TAG, "onDone: done for original text")
-                    requireActivity().runOnUiThread {
-                        resetToPlayState(Constant.ORIGINAL_TEXT)
-                    }
-                }
-                else{
-                    Log.d(TAG, "onDone: done for translated text")
-                    requireActivity().runOnUiThread {
-                        resetToPlayState(Constant.TRANSLATED_TEXT)
-                    }
+                requireActivity().runOnUiThread {
+                    resetToPlayState(resource)
                 }
             }
 
             override fun onError(utteranceId: String?) {
-                if(resource == Constant.ORIGINAL_TEXT){
-                    Log.d(TAG, "onError: error on original text")
-                    requireActivity().runOnUiThread {
-                        resetToPlayState(Constant.ORIGINAL_TEXT)
-                    }
-                }
-                else{
-                    Log.d(TAG, "onError: error on translated text")
-                    requireActivity().runOnUiThread {
-                        resetToPlayState(Constant.TRANSLATED_TEXT)
-                    }
+                Log.d(TAG, "onError: error on $resource")
+                requireActivity().runOnUiThread {
+                    resetToPlayState(resource)
                 }
             }
         })
     }
 
-    private fun resetToPlayState(resource: String){
+    private fun resetToPlayState(resource: String) {
         Log.d(TAG, "resetToPlayState: resource = $resource")
-        if(resource == Constant.ORIGINAL_TEXT){
-            Log.d(TAG, "resetToPlayState: state change for original text")
-            requireActivity().runOnUiThread {
+        when (resource) {
+            Constant.ORIGINAL_TEXT -> {
                 mBinding.speakOriginalText.setImageDrawable(getDrawable(requireContext(), R.drawable.ic_play_24))
                 isOriginalSpeaking = false
             }
-        } else{
-            Log.d(TAG, "resetToPlayState: state change for translate text")
-            requireActivity().runOnUiThread {
+            Constant.TRANSLATED_TEXT -> {
                 mBinding.speakTranslatedText.setImageDrawable(getDrawable(requireContext(), R.drawable.ic_play_24))
                 isTranslatedSpeaking = false
             }
@@ -406,13 +382,6 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
                     mBinding.progressBarOrg.visibility = INVISIBLE
                     mBinding.imageResult.text = resultText
 
-                    // Calculate accuracy
-                    val groundTruth = "This is the actual text in the image" // Replace with actual ground truth
-                    val cer = calculateCER(groundTruth, resultText)
-                    val wer = calculateWER(groundTruth, resultText)
-                    Log.d(TAG, "Character Error Rate (CER): $cer")
-                    Log.d(TAG, "Word Error Rate (WER): $wer")
-
                     // Trigger translation
                     mTranslationUsingGemini.translateItUsingGemini(resultText)
                 } else {
@@ -427,101 +396,15 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
             }
     }
 
-    private fun calculateCER(groundTruth: String, extractedText: String): Double {
-        val lenGroundTruth = groundTruth.length
-        if (lenGroundTruth == 0) return if (extractedText.isEmpty()) 0.0 else 1.0
-
-        val distance = levenshteinDistance(groundTruth, extractedText)
-        return distance.toDouble() / lenGroundTruth
-    }
-
-    fun levenshteinDistance(s1: String, s2: String): Int {
-        val dp = Array(s1.length + 1) { IntArray(s2.length + 1) }
-
-        for (i in 0..s1.length) {
-            for (j in 0..s2.length) {
-                when {
-                    i == 0 -> dp[i][j] = j
-                    j == 0 -> dp[i][j] = i
-                    else -> dp[i][j] = minOf(
-                        dp[i - 1][j - 1] + if (s1[i - 1] == s2[j - 1]) 0 else 1, // Substitution
-                        dp[i - 1][j] + 1, // Deletion
-                        dp[i][j - 1] + 1  // Insertion
-                    )
-                }
-            }
-        }
-        return dp[s1.length][s2.length]
-    }
-
-    private fun calculateWER(groundTruth: String, extractedText: String): Double {
-        val groundTruthWords = groundTruth.split("\\s+".toRegex())
-        val extractedWords = extractedText.split("\\s+".toRegex())
-
-        val lenGroundTruth = groundTruthWords.size
-        if (lenGroundTruth == 0) return if (extractedWords.isEmpty()) 0.0 else 1.0
-
-        val distance = levenshteinDistance(groundTruthWords, extractedWords)
-        return distance.toDouble() / lenGroundTruth
-    }
-
-    private fun levenshteinDistance(words1: List<String>, words2: List<String>): Int {
-        val dp = Array(words1.size + 1) { IntArray(words2.size + 1) }
-
-        for (i in 0..words1.size) {
-            for (j in 0..words2.size) {
-                when {
-                    i == 0 -> dp[i][j] = j
-                    j == 0 -> dp[i][j] = i
-                    else -> dp[i][j] = minOf(
-                        dp[i - 1][j - 1] + if (words1[i - 1] == words2[j - 1]) 0 else 1, // Substitution
-                        dp[i - 1][j] + 1, // Deletion
-                        dp[i][j - 1] + 1  // Insertion
-                    )
-                }
-            }
-        }
-        return dp[words1.size][words2.size]
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-        mSpeech.shutdown()
-        mSpeech.stop()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         Log.d(TAG, "onDestroyView: view destroy")
         _binding = null
-        if (::mSpeech.isInitialized) {
-            mSpeech.stop()
-            mSpeech.shutdown()
-        }
-        mSpeech.stop()
-        mSpeech.shutdown()
-    }
-
-    override fun onInit(status: Int) {
-        Log.d(TAG, "onInit: status $status")
-        if (status == TextToSpeech.SUCCESS) {
-            // Set the language
-            val result = mSpeech.setLanguage(Locale.US)
-            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Log.d(TAG, "Language not supported or missing data")
-            } else {
-                Log.d(TAG, "TextToSpeech initialized successfully")
-            }
-        } else {
-            Log.d(TAG, "TextToSpeech initialization failed")
-        }
     }
 
     companion object {
         private const val TAG = "ImageFragment"
     }
-
 
     inner class TranslationUsingGemini {
         @SuppressLint("SetTextI18n")
@@ -544,13 +427,12 @@ class ImageFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListe
             }
             // Observe the result
             mMyViewModel.translationResult.observe(viewLifecycleOwner, Observer { result ->
-                if(result.isNullOrEmpty()){
+                if (result.isNullOrEmpty()) {
                     mBinding.translatedTextView.text = "Translation failed"
-                }else{
+                } else {
                     mBinding.translatedTextView.text = result
                 }
             })
         }
     }
 }
-

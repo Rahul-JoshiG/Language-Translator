@@ -2,8 +2,11 @@
 agp = "8.8.0"
 coil = "2.5.0"
 generativeai = "0.9.0"
+googleServices = "4.4.2"
+gradle = "8.8.0"
+gradleApi = "8.7.3"
 hiltAndroid = "2.51.1"
-kotlin = "2.1.0"
+kotlin = "2.0.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -15,8 +18,8 @@ constraintlayout = "2.2.0"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.1.0"
 firebaseAnalytics = "22.2.0"
-navigationFragmentKtx = "2.8.5"
-navigationUiKtx = "2.8.5"
+navigationFragmentKtx = "2.8.6"
+navigationUiKtx = "2.8.6"
 sdpAndroid = "1.1.1"
 sspAndroid = "1.1.1"
 
@@ -24,6 +27,9 @@ sspAndroid = "1.1.1"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 generativeai = { module = "com.google.ai.client.generativeai:generativeai", version.ref = "generativeai" }
+google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+gradle-api = { module = "com.android.tools.build:gradle-api", version.ref = "gradleApi" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
