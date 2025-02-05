@@ -43,7 +43,7 @@ import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ImageFragment : Fragment(), View.OnClickListener{
+class ImageFragment : Fragment(), View.OnClickListener {
 
     @Inject
     lateinit var mSpeech: TextToSpeech // Injected by Hilt
@@ -52,7 +52,6 @@ class ImageFragment : Fragment(), View.OnClickListener{
     private val mBinding get() = _binding!!
 
     private lateinit var mMyViewModel: MyViewModel
-    private val mTranslationUsingGemini by lazy { TranslationUsingGemini() }
 
     private val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
     private lateinit var imgBitmap: Bitmap
@@ -212,6 +211,7 @@ class ImageFragment : Fragment(), View.OnClickListener{
                             requestPermission()
                         }
                     }
+
                     1 -> { // Gallery option
                         openGallery()
                     }
@@ -279,7 +279,12 @@ class ImageFragment : Fragment(), View.OnClickListener{
             if (mSpeech.isSpeaking) mSpeech.stop()
             resetToPlayState(Constant.ORIGINAL_TEXT)
         } else {
-            mBinding.speakOriginalText.setImageDrawable(getDrawable(requireContext(), R.drawable.ic_pause_24))
+            mBinding.speakOriginalText.setImageDrawable(
+                getDrawable(
+                    requireContext(),
+                    R.drawable.ic_pause_24
+                )
+            )
             speakText(originalText)
             isOriginalSpeaking = true
         }
@@ -344,11 +349,22 @@ class ImageFragment : Fragment(), View.OnClickListener{
         Log.d(TAG, "resetToPlayState: resource = $resource")
         when (resource) {
             Constant.ORIGINAL_TEXT -> {
-                mBinding.speakOriginalText.setImageDrawable(getDrawable(requireContext(), R.drawable.ic_play_24))
+                mBinding.speakOriginalText.setImageDrawable(
+                    getDrawable(
+                        requireContext(),
+                        R.drawable.ic_play_24
+                    )
+                )
                 isOriginalSpeaking = false
             }
+
             Constant.TRANSLATED_TEXT -> {
-                mBinding.speakTranslatedText.setImageDrawable(getDrawable(requireContext(), R.drawable.ic_play_24))
+                mBinding.speakTranslatedText.setImageDrawable(
+                    getDrawable(
+                        requireContext(),
+                        R.drawable.ic_play_24
+                    )
+                )
                 isTranslatedSpeaking = false
             }
         }
@@ -383,7 +399,7 @@ class ImageFragment : Fragment(), View.OnClickListener{
                     mBinding.imageResult.text = resultText
 
                     // Trigger translation
-                    mTranslationUsingGemini.translateItUsingGemini(resultText)
+                   translateItUsingGemini(resultText)
                 } else {
                     ToastHelper.toast("No text found in the image")
                     mBinding.progressBarOrg.visibility = INVISIBLE
@@ -406,33 +422,31 @@ class ImageFragment : Fragment(), View.OnClickListener{
         private const val TAG = "ImageFragment"
     }
 
-    inner class TranslationUsingGemini {
-        @SuppressLint("SetTextI18n")
-        fun translateItUsingGemini(text: String) {
-            Log.d(TAG, "translateItUsingGemini: ")
+    @SuppressLint("SetTextI18n")
+    private fun translateItUsingGemini(text: String) {
+        Log.d(TAG, "translateItUsingGemini: ")
 
-            val selectLanguage =
-                supportedLanguages[mBinding.targetLanguage.selectedItemPosition].displayName
-            Log.d(TAG, "translateText: Target language code: $selectLanguage")
+        val selectLanguage =
+            supportedLanguages[mBinding.targetLanguage.selectedItemPosition].displayName
+        Log.d(TAG, "translateText: Target language code: $selectLanguage")
 
-            // Trigger translation
-            mMyViewModel.translateText(selectLanguage, text)
+        // Trigger translation
+        mMyViewModel.translateText(selectLanguage, text)
 
-            mMyViewModel.isTranslating.observe(viewLifecycleOwner) { isLoading ->
-                if (isLoading) {
-                    mBinding.progressBarTrs.visibility = VISIBLE
-                } else {
-                    mBinding.progressBarTrs.visibility = INVISIBLE
-                }
+        mMyViewModel.isTranslating.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                mBinding.progressBarTrs.visibility = VISIBLE
+            } else {
+                mBinding.progressBarTrs.visibility = INVISIBLE
             }
-            // Observe the result
-            mMyViewModel.translationResult.observe(viewLifecycleOwner, Observer { result ->
-                if (result.isNullOrEmpty()) {
-                    mBinding.translatedTextView.text = "Translation failed"
-                } else {
-                    mBinding.translatedTextView.text = result
-                }
-            })
         }
+        // Observe the result
+        mMyViewModel.translationResult.observe(viewLifecycleOwner, Observer { result ->
+            if (result.isNullOrEmpty()) {
+                mBinding.translatedTextView.text = "Translation failed"
+            } else {
+                mBinding.translatedTextView.text = result
+            }
+        })
     }
 }

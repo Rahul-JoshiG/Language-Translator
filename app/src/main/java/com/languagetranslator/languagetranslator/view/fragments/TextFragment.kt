@@ -35,11 +35,10 @@ class TextFragment : Fragment() {
     @Inject
     lateinit var mSpeech: TextToSpeech
 
-    private val mTranslationUsingGemini by lazy { TranslationUsingGemini() }
     private var _binding: FragmentTextBinding? = null
     private val mBinding get() = _binding!!
 
-    private lateinit var mMyViewModel : MyViewModel
+    private lateinit var mMyViewModel: MyViewModel
 
     //view is creating
     override fun onCreateView(
@@ -87,8 +86,8 @@ class TextFragment : Fragment() {
                 return@setOnClickListener
             } else {
                 mBinding.progressBar.visibility = VISIBLE
-                mTranslationUsingGemini.detectTheLanguage(inputText)
-                mTranslationUsingGemini.translateText(inputText)
+                detectTheLanguage(inputText)
+                translateText(inputText)
             }
         }
 
@@ -303,74 +302,72 @@ class TextFragment : Fragment() {
         }
     }
 
-    inner class TranslationUsingGemini {
-        /**
-         *Translate the written text
-         *
-         * @param data goes for translation.
-         * */
-        fun translateText(data: String) {
-            Log.d(TAG, "translateText: data = $data")
-            if (data.isEmpty()) {
-                ToastHelper.toast("No Text is available")
-                return
-            }
-            val targetLanguage =
-                supportedLanguages[mBinding.targetLang.selectedItemPosition].displayName
+    /**
+     *Translate the written text
+     *
+     * @param data goes for translation.
+     * */
+    private fun translateText(data: String) {
+        Log.d(TAG, "translateText: data = $data")
+        if (data.isEmpty()) {
+            ToastHelper.toast("No Text is available")
+            return
+        }
+        val targetLanguage =
+            supportedLanguages[mBinding.targetLang.selectedItemPosition].displayName
 
-            mMyViewModel.translateText(targetLanguage, data)
+        mMyViewModel.translateText(targetLanguage, data)
 
-            mMyViewModel.isTranslating.observe(viewLifecycleOwner){isLoading->
-                if(isLoading){
-                    mBinding.progressBar.visibility = VISIBLE
-                }else{
-                    mBinding.progressBar.visibility = INVISIBLE
-                }
-            }
-
-            mMyViewModel.translationResult.observe(viewLifecycleOwner, Observer { result ->
+        mMyViewModel.isTranslating.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                mBinding.progressBar.visibility = VISIBLE
+            } else {
                 mBinding.progressBar.visibility = INVISIBLE
-                mBinding.targetText.text = result ?: "Translation failed"
-            })
+            }
         }
 
-        /**
-         * detecting the language of receive data
-         *
-         * check the language of @param data
-         * **/
-        fun detectTheLanguage(data: String) {
-            Log.d(TAG, "detectTheLanguage: Detecting language of $data")
+        mMyViewModel.translationResult.observe(viewLifecycleOwner, Observer { result ->
+            mBinding.progressBar.visibility = INVISIBLE
+            mBinding.targetText.text = result ?: "Translation failed"
+        })
+    }
 
-            // Trigger language detection in the ViewModel
-            mMyViewModel.detectLanguageOfText(data)
+    /**
+     * detecting the language of receive data
+     *
+     * check the language of @param data
+     * **/
+    private fun detectTheLanguage(data: String) {
+        Log.d(TAG, "detectTheLanguage: Detecting language of $data")
 
-            // Observe the result and update the Spinner selection
-            mMyViewModel.detectLanguage.observe(viewLifecycleOwner, Observer { result ->
-                result?.let { detectedLanguage ->
-                    Log.d(TAG, "detectTheLanguage: Detected language is $detectedLanguage")
+        // Trigger language detection in the ViewModel
+        mMyViewModel.detectLanguageOfText(data)
 
-                    // Find the position of the detected language in the Spinner's adapter
-                    val position =
-                        supportedLanguages.indexOfFirst {
-                            it.displayName.trim().equals(detectedLanguage.trim(), ignoreCase = true)
-                        }
+        // Observe the result and update the Spinner selection
+        mMyViewModel.detectLanguage.observe(viewLifecycleOwner, Observer { result ->
+            result?.let { detectedLanguage ->
+                Log.d(TAG, "detectTheLanguage: Detected language is $detectedLanguage")
 
-                    Log.d(TAG, "detectTheLanguage: position = $position")
-                    if (position != -1) {
-                        // Set the Spinner's selection to the detected language
-                        mBinding.sourceLang.setSelection(position)
-                    } else {
-                        // Handle case where detected language is not in the list
-                        Log.d(TAG, "detectTheLanguage: Language not found in supported languages.")
-                        mBinding.sourceLang.setSelection(0)
+                // Find the position of the detected language in the Spinner's adapter
+                val position =
+                    supportedLanguages.indexOfFirst {
+                        it.displayName.trim().equals(detectedLanguage.trim(), ignoreCase = true)
                     }
-                } ?: run {
-                    Log.d(TAG, "detectTheLanguage: Detection failed, setting default value.")
+
+                Log.d(TAG, "detectTheLanguage: position = $position")
+                if (position != -1) {
+                    // Set the Spinner's selection to the detected language
+                    mBinding.sourceLang.setSelection(position)
+                } else {
+                    // Handle case where detected language is not in the list
+                    Log.d(TAG, "detectTheLanguage: Language not found in supported languages.")
                     mBinding.sourceLang.setSelection(0)
                 }
-            })
-        }
+            } ?: run {
+                Log.d(TAG, "detectTheLanguage: Detection failed, setting default value.")
+                mBinding.sourceLang.setSelection(0)
+            }
+        })
     }
 
     companion object {
